@@ -1,0 +1,29 @@
+[project]
+name = "usfq-rag"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "docling>=2.15.1",
+    "duckduckgo-search>=8.1.1",
+    "ipykernel>=6.29.5",
+    "ipywidgets>=8.1.7",
+    "json-repair>=0.48.0",
+    "langchain>=0.3.25",
+    "langchain-community>=0.3.24",
+    "langchain-docling>=0.2.0",
+    "langchain-experimental>=0.3.4",
+    "langchain-huggingface>=0.2.0",
+    "langchain-milvus>=0.1.10",
+    "langchain-openai>=0.3.17",
+    "langgraph>=0.4.8",
+    "langgraph-supervisor>=0.0.27",
+    "langsmith>=0.3.42",
+    "networkx>=3.4.2",
+    "openevals>=0.1.0",
+    "opik>=1.8.7",
+    "pydantic>=2.11.4",
+    "pymilvus>=2.5.8",
+    "python-dotenv>=1.1.0",
+]

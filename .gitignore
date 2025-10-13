@@ -1,0 +1,6 @@
+.venv/
+files/
+volumes/
+__pycache__/
+.env
+src/sandbox

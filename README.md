@@ -1,73 +1,120 @@
+## CHATBOT USFQ: MANUAL DEL ESTUDIANTE
 
-`http://127.0.0.1:9091/webui/`
+Repositorio que contiene la arquitectura desarrollada para la implementación del ChatBot de la USFQ sobre el Manual del Estudiante.
 
+### BASE VECTORIAL
 
+La base vectorial que se ha escogido es [Milvus](https://milvus.io/es), para levantar la arquitectura de esta base, se utiliza docker.
 
-Fuentes que se utilizaron para construir un RAG:
++ [Docker(Linux)](https://milvus.io/docs/es/install_standalone-docker.md)
++ [DockerCompose(Linux)](https://milvus.io/docs/es/install_standalone-docker-compose.md)
++ [Docker(Windows)](https://milvus.io/docs/es/install_standalone-windows.md)
 
-Milvus:
-[text](https://python.langchain.com/docs/integrations/vectorstores/milvus/)
-    https://www.youtube.com/watch?v=OD5FS7qUfBQ
-    https://milvus.io/api-reference/pymilvus/v2.4.x/MilvusClient/Collections/create_schema.md
-    https://milvus.io/docs/es/quickstart.md
+Se recomienda seguir la documentación o tutoriales proporcionados en la misma [página](https://milvus.io/docs/es/quickstart.md) para mantenerse actualizados con la sintaxis y nuevas funcionalidades.
 
-Docling:
-    [text](https://www.youtube.com/watch?v=9lBTS5dM27c)
-    [text](https://www.youtube.com/watch?v=zSCxbqgqeJ8)
-    [text](https://docling-project.github.io/docling/examples/hybrid_chunking/#configuring-tokenization)
+### MONITOREO
 
-RAG:
-    [text](https://docling-project.github.io/docling/examples/rag_langchain/#ingestion)
-    [text](https://python.langchain.com/docs/integrations/document_loaders/docling/)
+Para el monitoreo y seguimiento de las respuestas generadas y el flujo de agentes se trabaja con [Opik](https://www.comet.com/docs/opik/).
 
++ Instalación y configuración con [Docker](https://www.comet.com/docs/opik/self-host/local_deployment)
 
-Por hacer:
-    [text](https://python.langchain.com/docs/tutorials/rag/)
+### PDF to CHUNK
 
-Guias:
-    [text](https://www.apideck.com/blog/building-a-local-rag-chat-app-with-reflex-langchain-huggingface-and-ollama)
-    [text](https://github.com/TAMustafa/Local_Chat_RAG/tree/main)
++ Se utulizó [Docling](https://docling-project.github.io/docling/) para convertir el documento PDF a MarkDown y a Chunks
 
-Langchain:
-    [text](https://docs.smith.langchain.com/observability/tutorials/observability)
+### ORQUESTACIÓN
 
-Embeddings:
-    [text](https://platform.openai.com/docs/guides/embeddings)
+Los frameworls utilizados para la creación y orquestación de agentes.
 
++ [LangChain](https://www.langchain.com/langchain)
++ [LangGraph](https://www.langchain.com/langgraph)
 
-https://www.nb-data.com/p/rag-evaluation-monitoring-and-logging
-https://www.comet.com/docs/opik/cookbook/ragas
-https://github.com/comet-ml/opik
-https://www.comet.com/docs/opik/evaluation/metrics/overview
-https://www.comet.com/docs/opik/evaluation/metrics/context_precision
-https://www.comet.com/docs/opik/evaluation/metrics/custom_model
-https://www.comet.com/docs/opik/cookbook/langchain
-https://www.comet.com/docs/opik/evaluation/evaluate_agents
-https://github.com/langchain-ai/langchain/discussions/26109
-https://github.com/langchain-ai/langchain/discussions/18309
+<img src="images/AgenticRag.svg" alt="Flujo de agentes ChatBotUSFQ" width="1080" height="720" />
 
-https://medium.com/@fatimaparada.taboada/rag-on-csv-data-with-knowledge-graph-using-rdflib-rdflib-neo4j-and-langchain-4b12a114a20e
-https://python.langchain.com/docs/integrations/graphs/
-https://python.langchain.com/docs/integrations/graphs/rdflib_sparql/
-https://mlabonne.github.io/blog/posts/Article_Improve_ChatGPT_with_Knowledge_Graphs.html
-https://python.langchain.com/docs/how_to/graph_constructing/
-https://neo4j.com/blog/developer/graphrag-agent-neo4j-milvus/
-https://medium.com/data-science-in-your-pocket/graphrag-using-langchain-31b1ef8328b9
-https://python.langchain.com/docs/integrations/graphs/networkx/
-[Principal](https://github.com/milvus-io/bootcamp/blob/master/bootcamp/RAG/advanced_rag/langgraph-graphrag-agent-local.ipynb)
-https://python.langchain.com/docs/integrations/graphs/neo4j_cypher/
-https://neo4j.com/docs/operations-manual/current/docker/introduction/
+## PROJECT
 
-[MCP](https://medium.com/data-science-in-your-pocket/rag-mcp-server-tutorial-89badff90c00)
-[MCP-LANG](https://docs.langchain.com/oss/python/use-mcp)
+### Datos
 
+```
+├── 📁 data
+│   ├── 📝 manual_usfq.md
+│   ├── 📄 preguntasyrespuestas_clean.xlsx
+│   └── 📄 usfq-qa-dataset-v2.xlsx
+```
 
-Hay como usar buscadores en línea para preguntas aún más específicas y que no estén en el vectordabase o Graph
+Documentos utilizados:
 
-[WebSearchTool](https://python.langchain.com/docs/integrations/tools/searx_search/)
++ `manual_usfq.md`: Manual del estudiante USFQ en formato `md` obtenido por `docling`.
++ `preguntasyrespuestas_clean.xlsx`: Base de preguntas generada por estudiantes.
++ `usfq-qa-dataset-v2.xlsx`: Base de preguntas generada por `OpenIA`.
 
-O también se podría hacer un InMemomryVectorStore para cargar el contexto a la pregunta
-[InMemoryVectorStore](https://python.langchain.com/docs/integrations/tools/searx_search/)
-Pero mejor sería cargarlo directo a otra base y hacer un ruteador
+### Métricas
 
-O la mejor opción es definir un PROMPT para que busque con el proopio LLM
+```
+├── 📁 images
+│   ├── 📄 AgenticRag.excalidraw
+│   ├── 🖼️ AgenticRag.png
+│   ├── 📄 metrics.xlsx
+│   ├── 🖼️ metrics_database_1.png
+│   └── 🖼️ metrics_database_2.png
+```
+
+Métricas obtenidas tras la ejecución del ChatBot sobre las bases de preguntas.
+
+### Notebooks
+
+```
+├── 📁 notebooks
+│   ├── 📄 1_vector_store_retriever.ipynb
+│   ├── 📄 2_graph_retriever.ipynb
+│   ├── 📄 3_langrapgh_app.ipynb
+│   └── 📄 4_qa_test.ipynb
+```
+
++ `1_vector_store_retriever.ipynb`: Prueba de funcionamiento de recuperación de chunks a partir de la base vectorial.
++ `2_graph_retriever.ipynb`: Prueba de funcionamiento de recuperación de conocimiento de un grafo.
++ `3_langrapgh_app.ipynb`: Prueba de funcionamiento de ChatBot.
++ `4_qa_test.ipynb`: Ejución de ChatBot sobre base de preguntas.
+
+### Source
+
+```
+├── 📁 src
+│   ├── 📁 agent
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 response_agents.py
+│   │   └── 🐍 utils_agents.py
+│   ├── 📁 app
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 langraph_core.py
+│   │   └── 🐍 langraph_functions.py
+│   ├── 📁 infrastructure
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 chunking_doc.py
+│   │   ├── ⚙️ docker-compose.yml
+│   │   ├── 🐍 graph_knowledge.py
+│   │   └── 🐍 retrievers.py
+│   ├── 📁 prompts
+│   │   ├── 🐍 __init__.py
+│   │   └── 🐍 usfq_prompts.py
+│   ├── 📁 tools
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 add_to_graph_knowledege.py
+│   │   ├── 🐍 add_to_vectorstore.py
+│   │   ├── 🐍 create_qa_dataset.py
+│   │   └── 🐍 evaluate_rag.py
+│   └── 🐍 config.py 
+```
+
++ `agent/response_agents.py`: Definición de agentes de respuesta al usuario.
++ `agent/utils_agents.py`: Definición de agentes utilitarios o de uso interno.
++ `app/langraph_core.py`: Definición de flujo y orquestación de agentes en grafo.
++ `app/langraph_functions.py`: Definición de funciones que utilizan agentes.
++ `infrastructure/chunking_doc.py`: Chunking de documento md del manual del estudiante.
++ `infrastructure/graph_knowledge.py`: Construcción de grafo de conocimiento.
++ `infrastructure/retrievers.py`: Definición de recuperadores.
++ `prompts/usfq_prompts.py`: Definición de Prompts para agentes.
++ `tools/add_to_graph_knowledege.py`: Para inserción de nuevas tripletas al grafo de conocimiento.
++ `tools/add_to_vectorstore.py`: Para inserción de nuevos chunks a la base vectorial.
++ `tools/create_qa_dataset.py`: Para creación de bases de evaluación en Opik.
++ `tools/evaluate_rag.py`: Definición de clase para evaluar el ChatBot.

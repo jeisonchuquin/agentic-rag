@@ -5,6 +5,7 @@ from langchain_text_splitters import MarkdownHeaderTextSplitter
 from docling.chunking import HybridChunker
 from docling_core.transforms.chunker.tokenizer.openai import OpenAITokenizer
 from langchain_experimental.graph_transformers import LLMGraphTransformer
+from langchain_core.prompts import PromptTemplate
 from langchain_community.graphs import NetworkxEntityGraph
 from ..config import PDF_PATH, llm_graph
 
@@ -48,9 +49,32 @@ elif EXPORT_TYPE == ExportType.MARKDOWN:
 else:
     raise ValueError(f"Unexpected export type: {EXPORT_TYPE}")
 
-
+# Construcción en inglés
 graph_transformer = LLMGraphTransformer(
-    llm=llm_graph    
+    llm=llm_graph,
+    prompt=PromptTemplate.from_template(
+'''
+You are a top-tier algorithm designed for extracting information in
+structured formats to build a knowledge graph. Your task is to identify
+the entities and relations requested with the user prompt from a given
+text. You must generate the output in a JSON format containing a list
+with JSON objects. Each object should have the keys: head,
+head_type, relation, tail, and tail_type.
+Your task is to extract relationships from text strictly adhering
+to the provided schema. The relationships can only appear
+between specific node types are presented in the schema format
+like: (Entity1Type, RELATIONSHIP_TYPE, Entity2Type) /n
+Attempt to extract as many entities and relations as you can. Maintain
+Entity Consistency: When extracting entities, it's vital to ensure
+consistency. If an entity, such as John Doe, is mentioned multiple
+times in the text but is referred to by different names or pronouns
+(e.g., Joe, he), always use the most complete identifier for
+that entity. The knowledge graph should be coherent and easily
+understandable, so maintaining consistency in entity references is
+crucial.,
+IMPORTANT NOTES:\n- Don't add any explanation and text. ,
+'''
+    )    
 )
 
 graph_documents = graph_transformer.convert_to_graph_documents(splits)
